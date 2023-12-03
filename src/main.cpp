@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include <unistd.h>
+#include "audio/audio.h"
 using namespace std;
 
 void show_usage() {
@@ -20,6 +21,10 @@ int main(int argc, char* argv[]) {
 	int work_duration;
 	int break_duration;
 
+	Note G(392.0);
+	Note C(261.63);
+
+
 	if(argc != 5) {
 		show_usage();
 		exit(0);
@@ -32,9 +37,11 @@ int main(int argc, char* argv[]) {
 
 	while(true) {
 		cout << "Pomodoro started." << endl;
-		sleep(work_duration * 60);
+		C.play();
+		sleep(work_duration);
 		cout << "Break started." << endl;
-		sleep(break_duration * 60);
+		G.play();
+		sleep(break_duration);
 	}
 
 	return 0;
