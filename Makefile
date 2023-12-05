@@ -1,16 +1,25 @@
 CC=g++
 BINARY=pomusi
 
-build/${BINARY}:main.cpp
+setup:
 	mkdir -p build/
-	${CC} -o $@ $<
+
+build/audio.o: src/audio/audio.cpp
+	${CC} -c $< -o $@ -lSDL2
+
+build/${BINARY}: src/main.cpp build/audio.o
+	mkdir -p build/
+	${CC} -o $@ $^ -lSDL2
+
+build: setup build/audio.o build/${BINARY}
 
 clean:
 	rm -rf build/
 
 uninstall:
-	sudo rm -rf /usr/bin/${BINARY}
+	sudo rm -f /usr/bin/${BINARY}
 
-install:build/pomusi
-	sudo cp build/${BINARY} /usr/bin/
+install: build/${BINARY}
+	sudo cp $< /usr/bin/
 	@make clean
+
