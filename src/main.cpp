@@ -8,7 +8,8 @@ void show_usage() {
 	cout << "pomusi --work <work-duration> --break <break-duration>" << endl <<
 		"--work <time-in-seconds>" << " time to run pomodoro duration for" << endl <<
 		"--break <time-in-seconds>" << " time to run break duration for" << endl <<
-		"--quiet" << " disable sound notifications" << endl;
+		"--quiet" << " disable sound notifications" << 
+		"--verbose" << "enable debug messages" << endl;
 }
 
 int parse_int(char* str) {
@@ -24,6 +25,7 @@ int main(int argc, char* argv[]) {
 	int work_duration;
 	int break_duration;
 	bool play_sound = true;
+	bool verbose = false;
 
 	Note G(392.0);
 	Note C(261.63);
@@ -39,13 +41,14 @@ int main(int argc, char* argv[]) {
 		if(!strcmp("--work", argv[i])) work_duration = parse_int(argv[i+1]);
 		else if(!strcmp("--break", argv[i])) break_duration = parse_int(argv[i+1]);
 		else if(!strcmp("--quiet", argv[i])) play_sound = false;
+		else if(!strcmp("--verbose", argv[i])) verbose = true;
 	}
 
 	while(true) {
-		cout << "Pomodoro started." << endl;
+		if (verbose) cout << "Pomodoro started." << endl;
 		if (play_sound) C.play();
 		sleep(work_duration);
-		cout << "Break started." << endl;
+		if (verbose) cout << "Break started." << endl;
 		if (play_sound) G.play();
 		sleep(break_duration);
 	}
