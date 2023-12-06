@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cstring>
 #include <unistd.h>
+#include <cstdlib>
 #include "audio/audio.h"
 using namespace std;
 
@@ -26,6 +27,7 @@ int main(int argc, char* argv[]) {
 	int break_duration;
 	bool play_sound = true;
 	bool verbose = false;
+	bool daemonize = false;
 
 	Note G(392.0);
 	Note C(261.63);
@@ -42,6 +44,25 @@ int main(int argc, char* argv[]) {
 		else if(!strcmp("--break", argv[i])) break_duration = parse_int(argv[i+1]);
 		else if(!strcmp("--quiet", argv[i])) play_sound = false;
 		else if(!strcmp("--verbose", argv[i])) verbose = true;
+		else if(!strcmp("--detach", argv[i])) daemonize = true;
+	}
+
+	if(daemonize) {
+		pid_t pid = fork();
+
+		if(pid < 0) {
+			if(verbose) cout << "Error: Failed to detach." << endl;
+			return EXIT_FAILURE;
+		}
+
+		if(pid > 0) {
+			if(verbose) cout << "Detaching to background." << endl;
+			return EXIT_SUCCESS;
+		}
+
+		close(STDIN_FILENO);
+		close(STDOUT_FILENO);
+		close(STDERR_FILENO);
 	}
 
 	while(true) {
