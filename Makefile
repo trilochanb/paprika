@@ -10,11 +10,14 @@ build/audio.o: src/audio/audio.cpp
 build/utils.o: src/utils/utils.cpp
 	${CC} -c $< -o $@
 
-build/${BINARY}: src/main.cpp build/audio.o build/utils.o
+build/pomodoro.o: src/pomodoro/pomodoro.cpp
+	${CC} -c $< -o $@
+
+build/${BINARY}: src/main.cpp build/audio.o build/utils.o build/pomodoro.o
 	mkdir -p build/
 	${CC} -o $@ $^ -lSDL2
 
-build: setup build/audio.o build/utils.o build/${BINARY}
+build: setup build/audio.o build/utils.o build/pomodoro.o build/${BINARY}
 
 clean:
 	rm -rf build/
