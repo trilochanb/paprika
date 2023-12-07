@@ -10,14 +10,14 @@ Learn more about the [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro
 
 #### Installing
 ```
-git clone https://github.com/trilochanb/pomusi
-cd pomusi
+git clone https://github.com/trilochanb/pomrika
+cd pomrika
 make
 make install
 ```
 
 #### Removing
 ```
-cd pomusi
+cd pomrika
 make uninstall
 ```
