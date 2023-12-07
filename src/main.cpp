@@ -22,9 +22,40 @@ int parse_int(char* str) {
 	return num;
 }
 
+class Time {
+	protected:
+		int duration;
+		double sound_freq;
+	public:
+		Time(): duration(0), sound_freq(0.0) {}
+
+		Time(int dur, double freq): duration(dur), sound_freq(freq) {}
+
+		virtual void start() {
+			sleep(duration);
+		}
+
+		virtual void notify() {
+			Note n(sound_freq);
+			n.play();
+		}
+};
+
+class Work : public Time {
+	public:
+		Work(): Time(0, 0.0) {}
+		Work(int dur, double freq): Time(dur, freq) {}
+};
+
+class Break: public Time {
+	public:
+		Break(): Break(0, 0.0) {}
+		Break(int dur, double freq): Time(dur, freq) {}
+};
+
 int main(int argc, char* argv[]) {
-	int work_duration;
-	int break_duration;
+	Work w;
+	Break b;
 	bool play_sound = true;
 	bool verbose = false;
 	bool daemonize = false;
@@ -40,8 +71,8 @@ int main(int argc, char* argv[]) {
 	}
 
 	for(int i = 0; i < argc; i++) {
-		if(!strcmp("--work", argv[i])) work_duration = parse_int(argv[i+1]);
-		else if(!strcmp("--break", argv[i])) break_duration = parse_int(argv[i+1]);
+		if(!strcmp("--work", argv[i])) w = Work(parse_int(argv[i+1]), 392.0); // G note
+		else if(!strcmp("--break", argv[i])) b = Break(parse_int(argv[i+1]), 261.63); // C note
 		else if(!strcmp("--quiet", argv[i])) play_sound = false;
 		else if(!strcmp("--verbose", argv[i])) verbose = true;
 		else if(!strcmp("--detach", argv[i])) daemonize = true;
@@ -67,11 +98,11 @@ int main(int argc, char* argv[]) {
 
 	while(true) {
 		if (verbose) cout << "Pomodoro started." << endl;
-		if (play_sound) C.play();
-		sleep(work_duration);
+		if (play_sound) w.notify();
+		w.start();
 		if (verbose) cout << "Break started." << endl;
-		if (play_sound) G.play();
-		sleep(break_duration);
+		if (play_sound) b.notify();
+		b.start();
 	}
 
 	return 0;
