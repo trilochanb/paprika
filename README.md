@@ -1,6 +1,6 @@
-# Pomusi
+# Pomrika
 
-Pomusi is a lightweight pomodoro client for the shell.
+Pomrika is a lightweight pomodoro client for the shell.
 
 ### Getting Started
 
