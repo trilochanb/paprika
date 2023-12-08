@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstring>
+#include <stdlib.h>
 #include "utils.h"
 using namespace std;
 
@@ -34,3 +35,10 @@ opts parse_arguments(int argc, char** argv) {
 	}
 	return o;
 };
+
+void check_arguments(int argc) {
+	if(argc < 5) {
+		show_usage();
+		exit(0);
+	}
+}

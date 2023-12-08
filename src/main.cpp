@@ -9,11 +9,7 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 
-	// exit if there is no --work or --break flag and their parameters
-	if(argc < 5) {
-		show_usage();
-		exit(0);
-	}
+	check_arguments(argc);
 
 	opts options = parse_arguments(argc, argv);
 	Work w = Work(options.work_duration, 392.0); // G note
