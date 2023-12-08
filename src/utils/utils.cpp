@@ -4,7 +4,7 @@
 using namespace std;
 
 void show_usage() {
-	cout << "pomusi --work <work-duration> --break <break-duration>" << endl <<
+	cout << "pomrika --work <work-duration> --break <break-duration>" << endl <<
 		"--work <time-in-seconds>" << " time to run pomodoro duration for" << endl <<
 		"--break <time-in-seconds>" << " time to run break duration for" << endl <<
 		"--quiet" << " disable sound notifications" << 

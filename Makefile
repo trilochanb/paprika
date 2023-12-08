@@ -1,5 +1,5 @@
 CC=g++
-BINARY=pomusi
+BINARY=pomrika
 
 setup:
 	mkdir -p build/
