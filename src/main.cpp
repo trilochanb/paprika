@@ -8,15 +8,6 @@
 using namespace std;
 
 int main(int argc, char* argv[]) {
-	Work w;
-	Break b;
-	bool play_sound = true;
-	bool verbose = false;
-	bool daemonize = false;
-
-	Note G(392.0);
-	Note C(261.63);
-
 
 	// exit if there is no --work or --break flag and their parameters
 	if(argc < 5) {
@@ -25,20 +16,20 @@ int main(int argc, char* argv[]) {
 	}
 
 	opts options = parse_arguments(argc, argv);
-	w = Work(options.work_duration, 392.0); // G note
-	b = Break(options.break_duration, 261.63); // C note
+	Work w = Work(options.work_duration, 392.0); // G note
+	Break b = Break(options.break_duration, 261.63); // C note
 
 
 	if(options.daemonize) {
 		pid_t pid = fork();
 
 		if(pid < 0) {
-			if(verbose) cout << "Error: Failed to detach." << endl;
+			if(options.verbose) cout << "Error: Failed to detach." << endl;
 			return EXIT_FAILURE;
 		}
 
 		if(pid > 0) {
-			if(verbose) cout << "Detaching to background." << endl;
+			if(options.verbose) cout << "Detaching to background." << endl;
 			return EXIT_SUCCESS;
 		}
 
