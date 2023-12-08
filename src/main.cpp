@@ -24,15 +24,12 @@ int main(int argc, char* argv[]) {
 		exit(0);
 	}
 
-	for(int i = 0; i < argc; i++) {
-		if(!strcmp("--work", argv[i])) w = Work(parse_int(argv[i+1]), 392.0); // G note
-		else if(!strcmp("--break", argv[i])) b = Break(parse_int(argv[i+1]), 261.63); // C note
-		else if(!strcmp("--quiet", argv[i])) play_sound = false;
-		else if(!strcmp("--verbose", argv[i])) verbose = true;
-		else if(!strcmp("--detach", argv[i])) daemonize = true;
-	}
+	opts options = parse_arguments(argc, argv);
+	w = Work(options.work_duration, 392.0); // G note
+	b = Break(options.break_duration, 261.63); // C note
 
-	if(daemonize) {
+
+	if(options.daemonize) {
 		pid_t pid = fork();
 
 		if(pid < 0) {
@@ -51,11 +48,11 @@ int main(int argc, char* argv[]) {
 	}
 
 	while(true) {
-		if (verbose) cout << "Pomodoro started." << endl;
-		if (play_sound) w.notify();
+		if (options.verbose) cout << "Pomodoro started." << endl;
+		if (options.play_sound) w.notify();
 		w.start();
-		if (verbose) cout << "Break started." << endl;
-		if (play_sound) b.notify();
+		if (options.verbose) cout << "Break started." << endl;
+		if (options.play_sound) b.notify();
 		b.start();
 	}
 
