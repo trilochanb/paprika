@@ -22,3 +22,12 @@ class Break: public Time {
 		Break(): Break(0, 0.0) {}
 		Break(int dur, double freq): Time(dur, freq) {}
 };
+
+class Pomodoro {
+	private:
+		Work w;
+		Break b;
+	public:
+		Pomodoro(Work w, Break b): w(w), b(b) {}
+		void main_loop(opts options);
+};

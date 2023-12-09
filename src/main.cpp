@@ -34,14 +34,8 @@ int main(int argc, char* argv[]) {
 		close(STDERR_FILENO);
 	}
 
-	while(true) {
-		if (options.verbose) cout << "Pomodoro started." << endl;
-		if (options.play_sound) w.notify();
-		w.start();
-		if (options.verbose) cout << "Break started." << endl;
-		if (options.play_sound) b.notify();
-		b.start();
-	}
+	Pomodoro p(w, b);
+	p.main_loop(options);
 
 	return 0;
 }
