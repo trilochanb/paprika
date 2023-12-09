@@ -1,5 +1,5 @@
 CC=g++
-BINARY=pomrika
+BINARY=paprika
 
 setup:
 	mkdir -p build/

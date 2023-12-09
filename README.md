@@ -1,6 +1,6 @@
-# Pomrika
+# Paprika
 
-Pomrika is a lightweight pomodoro client for the shell.
+Paprika is a lightweight pomodoro client for the shell.
 
 ### Getting Started
 
@@ -10,14 +10,14 @@ Learn more about the [Pomodoro Technique](https://en.wikipedia.org/wiki/Pomodoro
 
 #### Installing
 ```
-git clone https://github.com/trilochanb/pomrika
-cd pomrika
+git clone https://github.com/trilochanb/paprika
+cd paprika
 make
 make install
 ```
 
 #### Removing
 ```
-cd pomrika
+cd paprika
 make uninstall
 ```
