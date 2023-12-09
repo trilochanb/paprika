@@ -2,19 +2,31 @@
 #include <cstring>
 #include <unistd.h>
 #include <cstdlib>
+#include <csignal>
+#include <fstream>
+#include <sys/types.h>
+#include <sys/wait.h>
 #include "audio/audio.h"
 #include "utils/utils.h"
 #include "pomodoro/pomodoro.h"
 using namespace std;
 
+
 int main(int argc, char* argv[]) {
 
-	check_arguments(argc);
-
+//	check_arguments(argc);
 	opts options = parse_arguments(argc, argv);
+	
+	if(options.kill_daemon) {
+		pid_t pid;
+		ifstream pidfile("paprika.pid");
+		pidfile >> pid;
+		kill(pid, SIGKILL);
+		exit(0);
+	}
+
 	Work w = Work(options.work_duration, 392.0); // G note
 	Break b = Break(options.break_duration, 261.63); // C note
-
 
 	if(options.daemonize) {
 		pid_t pid = fork();
@@ -26,6 +38,10 @@ int main(int argc, char* argv[]) {
 
 		if(pid > 0) {
 			if(options.verbose) cout << "Detaching to background." << endl;
+			ofstream pidfile("paprika.pid");
+			pidfile << pid;
+			pidfile.close();
+
 			return EXIT_SUCCESS;
 		}
 

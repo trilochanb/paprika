@@ -8,6 +8,7 @@ struct cmdline_opts {
 	bool play_sound;
 	bool verbose;
 	bool daemonize;
+	bool kill_daemon;
 };
 
 typedef struct cmdline_opts opts;
