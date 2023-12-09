@@ -14,5 +14,3 @@ struct cmdline_opts {
 typedef struct cmdline_opts opts;
 
 opts parse_arguments(int argc, char** argv);
-
-void check_arguments(int argc);

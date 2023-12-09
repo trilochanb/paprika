@@ -14,7 +14,6 @@ using namespace std;
 
 int main(int argc, char* argv[]) {
 
-//	check_arguments(argc);
 	opts options = parse_arguments(argc, argv);
 	
 	if(options.kill_daemon) {
